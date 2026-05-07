@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>مراجعة المساهمات</title>
+    <style>
+        body { font-family: sans-serif; background: #2c3e50; color: white; padding: 20px; text-align: center; }
+        .card { background: white; color: #333; margin: 15px auto; padding: 15px; width: 350px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        img { width: 100%; border-radius: 10px; margin: 10px 0; border: 1px solid #ddd; }
+        .btn-ok { color: white; background: #27ae60; padding: 10px; text-decoration: none; border-radius: 5px; display: inline-block; width: 40%; }
+        .btn-no { color: white; background: #e74c3c; padding: 10px; text-decoration: none; border-radius: 5px; display: inline-block; width: 40%; }
+    </style>
+</head>
+<body>
+    <h1>مراجعة الإيصالات الواردة 🔍</h1>
+    <a href="/" style="color: #3498db;">الرجوع للموقع العام</a>
+    <hr>
+    {% for d in donations %}
+        <div class="card">
+            <h3>مبلغ: {{ d.amount }} ج.س</h3>
+            <img src="/static/uploads/{{ d.img }}">
+            <p>الحالة الحالية: <b>{{ d.status }}</b></p>
+            {% if "قيد الانتظار" in d.status %}
+                <a href="/action/{{ d.id }}/approve" class="btn-ok">موافقة ✅</a>
+                <a href="/action/{{ d.id }}/reject" class="btn-no">رفض ❌</a>
+            {% endif %}
+        </div>
+    {% else %}
+        <h3>لا توجد طلبات جديدة للمراجعة.</h3>
+    {% endfor %}
+</body>
+</html>
